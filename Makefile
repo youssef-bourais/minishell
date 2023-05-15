@@ -4,14 +4,14 @@ SRCS = minishell.c
 
 CC = cc
 
-CFLAGS = -Wall -Werror -Wextra -lreadline
+CFLAGS = -Wall -Werror -Wextra 
 
 OBJS = $(SRCS:.c=.o)
 
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-		$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+		$(CC) $(CFLAGS) -lreadline $(OBJS) -o $(NAME)
 clean :
 	rm -rf $(OBJS)
 
