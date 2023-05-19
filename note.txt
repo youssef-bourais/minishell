@@ -1,0 +1,78 @@
+signal, sigaction,
+sigemptyset,
+sigaddset, 
+printf, malloc, free, write, 
+open, read, close, 
+kill, exit,
+
+readline, 
+add_history, 
+rl_clear_history, 
+rl_on_new_line, 
+rl_replace_line, 
+rl_redisplay, 
+
+access, // cheak the existence(and all permmission W, R, X) of file {0 on sucess, -1 on error}
+fork, // split a process into child process 0 and parent process 1 (2 power of n = process nbr, where n is the number of fork())
+wait, // make the parent process wait until the child process has executed all of its commands
+waitpid, // make the process (id = ?) wait until the child process has executed all of its commands
+getcwd, // pwd : display current working directory of the calling program or process
+chdir, // change the current working directory
+stat, // give you information about the file in the path enered as argument 
+lstat, // do the same of stat but take in path symbolic link
+fstat, // do the same of stat but take an fd instaed
+unlink, // delete file in the path
+execve, // execute command in the path in the first argument, the second argument a **tab hold the path and some flage and null to determine the end, the 3 arg is null;
+dup, //creates a copy of a file descriptor
+dup2, //instead of using the lowest-numbered unused file descriptor, it uses the descriptor number specified by the user
+pipe, 
+opendir, // open a  directory fct returns a pointer to a DIR structure that represents the opened directory
+readdir, // reads the directory entries using the readdir function in a loop. The readdir function returns a pointer to a struct dirent representing each entry in the directory
+closedir, // the closedir function is called to close the directory and free any associated resources
+strerror, returns a string describing the error strerror(errno)
+perror, // prints an error message to the standard error stream (stderr)
+
+isatty, 
+ttyname, 
+ttyslot, 
+
+ioctl, 
+getenv, 
+tcsetattr, 
+tcgetattr, 
+tgetent, 
+tgetflag, 
+tgetnum, 
+tgetstr, 
+tgoto, 
+tputs
+
+• Display a prompt when waiting for a new command.
+• Have a working history.
+• Search and launch the right executable (based on the PATH variable or using a relative or an absolute path).
+• Not use more than one global variable. Think about it. You will have to explain its purpose.
+• Not interpret unclosed quotes or special characters which are not required by the subject such as \ (backslash) or ; (semicolon).
+• Handle ’ (single quote) which should prevent the shell from interpreting the meta- characters in the quoted sequence.
+• Handle " (double quote) which should prevent the shell from interpreting the meta- characters in the quoted sequence except for $ (dollar sign).
+
+◦ echo with option -n
+◦ cd with only a relative or absolute path ◦ pwd with no options
+◦ export with no options
+◦ unset with no options
+◦ env with no options or arguments
+◦ exit with no options
+
+◦ ctrl-C displays a new prompt on a new line. 
+◦ ctrl-D exits the shell.
+◦ ctrl-\ does nothing.
+
+• Implement pipes (| character). The output of each command in the pipeline is
+• connected to the input of the next command via a pipe.
+• Handle environment variables ($ followed by a sequence of characters) which should expand to their values.
+• Handle $? which should expand to the exit status of the most recently executed foreground pipeline.
+
+Implement redirections:
+◦ < should redirect input.
+◦ > should redirect output.
+◦ << should be given a delimiter, then read the input until a line containing the delimiter is seen. However, it doesn’t have to update the history!
+◦ >> should redirect output in append mode.
