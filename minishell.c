@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:39 by ybourais          #+#    #+#             */
-/*   Updated: 2023/05/19 17:46:59 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/05/22 10:40:17 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,51 +29,57 @@ void exucution(char *input)
     system(input);
 }
 
-int mn(int argc, char **argv)
+int main(int argc, char **argv)
 {
     (void)argc;
     (void)argv;
-
-    int execve(const char *path, char *const argv[], char *const envp[]);
-    int dup(int fildes);
     
-    DIR *opendir(const char *filename);
-    struct dirent *readdir(DIR *dirp);
-    int closedir(DIR *dirp);
-    
-    // while(1)
-    // {
-    //     input = readline("\e[1;32mmy_Shell-310$ \e[0m");
+    char *input;
 
-    //     // printf("%d\n", );
-    //     // if(!parssing(input))
-    //     //     printf("my_Shell: command not found: %s\n", input);
-    //     // else
-    //         // exucution(input);
-    // }
+    
+    
+    while(1)
+    {
+        input = readline("\e[1;32mmy_Shell-310$ \e[0m");
+
+        printf("%s\n", input);
+        // if(!parssing(input))
+        //     printf("my_Shell: command not found: %s\n", input);
+        // else
+        //     exucution(input);
+    }
     return 0;
 }
-#include <stdio.h>
-#include <dirent.h>
 
-int main() {
-    // DIR *dir;
-    // struct dirent *entry;
+// int main() {
+//     // DIR *dir;
+//     // struct dirent *entry;
 
-    // dir = opendir(".");
+//     // dir = opendir(".");
 
-    // if (dir == NULL) {
-    //     perror("opendir");
-    //     return 1;
-    // }
+//     // if (dir == NULL) {
+//     //     perror("opendir");
+//     //     return 1;
+//     // }
 
-    // Read directory entries
-    // while ((entry = readdir(dir)) != NULL) {
-        printf("\n");
-    // }
+//     // Read directory entries
+//     // while ((entry = readdir(dir)) != NULL) {
+//         // printf("\n");
+//     // }
 
-    // Close the directory
-    // closedir(dir);
+//     // Close the directory
+//     // closedir(dir);
+//     // int ioctl(int fildes, unsigned long request, ...);
+//     // char *getenv(const char *name);
+//     // int tcsetattr(int fildes, int optional_actions, const struct termios *termios_p);
 
-    return 0;
-}
+//     return 0;
+// }
+
+// int main() {
+
+//     char* clear_sequence = tgetstr("cl", NULL);
+//     tputs(clear_sequence, 1, putchar);
+//     printf("%s\n", clear_sequence);
+//     return 0;
+// }

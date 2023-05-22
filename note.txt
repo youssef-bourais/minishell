@@ -1,3 +1,4 @@
+
 signal, sigaction,
 sigemptyset,
 sigaddset, 
@@ -32,20 +33,20 @@ closedir, // the closedir function is called to close the directory and free any
 strerror, returns a string describing the error strerror(errno)
 perror, // prints an error message to the standard error stream (stderr)
 
-isatty, 
-ttyname, 
-ttyslot, 
+isatty, // It tells whether the file descriptor is connected to a terminal or not (1 if terminal else 0)
+ttyname, // return the name of the terminal
+ttyslot, // etermines the slot number of the current process's controlling terminal
 
-ioctl, 
-getenv, 
-tcsetattr, 
-tcgetattr, 
-tgetent, 
-tgetflag, 
-tgetnum, 
-tgetstr, 
-tgoto, 
-tputs
+ioctl, // function that allows programs to perform various control operations on devices or file descriptors
+getenv, // searches for the environment string pointed to by name and returns the associated value to the string.
+tcsetattr, // configure attributes like terminal mode, input/output processing, line control, and other settings related to the terminal device. 
+tcgetattr, // retrieves the current terminal attributes
+tgetent, // reads the terminal database and loads the capabilities for a specific terminal type into the term_buffer. It returns an integer value to indicate the success or failure of the operation.
+tgetflag, // tgetflag retrieves the boolean value of a particular capability from the terminal database. It takes a single argument: the capability name
+tgetnum, //  retrieves the numeric value of a particular capability from the terminal database.
+tgetstr, // tgetstr retrieves the string value of a particular capability from the terminal database. It takes a single argument: the capability name.
+tgoto, // tgoto generates a cursor movement string for the given capability and position.It takes three arguments: the capability name, the column position, and the row position.Example usage: char* cursor_movement = tgoto("cm", 5, 10);
+tputs // tputs outputs a terminal capability string to the terminal.
 
 • Display a prompt when waiting for a new command.
 • Have a working history.

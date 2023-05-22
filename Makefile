@@ -11,7 +11,7 @@ OBJS = $(SRCS:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-		$(CC) $(CFLAGS)  $(OBJS) -o $(NAME) -lreadline
+		$(CC) $(CFLAGS)  $(OBJS) -o $(NAME) -lreadline -ltermcap
 clean :
 	rm -rf $(OBJS)
 
