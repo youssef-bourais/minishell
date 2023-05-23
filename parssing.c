@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 10:05:20 by ybourais          #+#    #+#             */
-/*   Updated: 2023/05/23 19:50:01 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/05/23 20:12:39 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void check_quoting(char *str)
     }
     token[j] = '\0';
     printf("%s\n", token);
+    
 }
 
 // i = inside_quot(str, i + 1, 34, token); /* double quot */
