@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 11:00:07 by ybourais          #+#    #+#             */
-/*   Updated: 2023/05/23 10:10:21 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:54:45 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 #include <termios.h> /* tcsetattr */
 #include <termcap.h> /* tgetent */
 
-// static char **parssing(char *input);
+void parssing(char *input);
+int appear_first(char *str);
+void check_quoting(char *str);
 
 #endif

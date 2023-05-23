@@ -6,17 +6,17 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:39 by ybourais          #+#    #+#             */
-/*   Updated: 2023/05/23 10:10:10 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:48:56 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-void exucution(char *input)
-{
-    system(input);
-}
+// void exucution(char *input)
+// {
+//     system(input);
+// }
 
 int main(int argc, char **argv)
 {
@@ -30,10 +30,18 @@ int main(int argc, char **argv)
     {
         input = readline("\e[1;32mmy_Shell-310$ \e[0m");
 
+        // if (check_quoting(input) == 1)
+        //     printf("true\n");
+        // else if (check_quoting(input) == 0)
+        //     printf("false\n");
+            
         // parssing(input);
-        exucution(input);
+        // if (check_quoting(input) == 0)
+        //     printf("false\n");
+        // else
+        //     printf("true\n");
+        check_quoting(input);
     }
-
     // DIR *d;
     // struct dirent *dd;
 
