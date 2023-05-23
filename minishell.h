@@ -6,13 +6,14 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 11:00:07 by ybourais          #+#    #+#             */
-/*   Updated: 2023/05/22 10:26:35 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/05/23 10:10:21 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+#include <fcntl.h> /* open */
 # include <stdio.h> /* printf strerror perror*/
 #include <readline/readline.h> /* redline */
 #include <readline/history.h> /* redline */
@@ -24,5 +25,7 @@
 #include <sys/ioctl.h> /* ioctl */
 #include <termios.h> /* tcsetattr */
 #include <termcap.h> /* tgetent */
+
+// static char **parssing(char *input);
 
 #endif

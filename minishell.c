@@ -6,23 +6,12 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:39 by ybourais          #+#    #+#             */
-/*   Updated: 2023/05/22 10:40:17 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/05/23 10:10:10 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int parssing(char *input)
-{
-    int i = 0;
-    while(input[i] != '\0')
-    {
-        if (input[i])
-            return 0;
-        i++;
-    }
-    return 1;   
-}
 
 void exucution(char *input)
 {
@@ -35,51 +24,33 @@ int main(int argc, char **argv)
     (void)argv;
     
     char *input;
-
-    
+    // struct stat s;
     
     while(1)
     {
         input = readline("\e[1;32mmy_Shell-310$ \e[0m");
 
-        printf("%s\n", input);
-        // if(!parssing(input))
-        //     printf("my_Shell: command not found: %s\n", input);
-        // else
-        //     exucution(input);
+        // parssing(input);
+        exucution(input);
     }
+
+    // DIR *d;
+    // struct dirent *dd;
+
+    // d = opendir("/Users/ybourais/Desktop/minishell");
+
+    // while ((dd = readdir(d)) != NULL)
+    //     printf("%hhu\n", dd->d_name);
+
+    // closedir(d);
+    // char *tab[] = {"/bin/ls", "-a", NULL};
+    // execve(tab[0], tab, NULL);
+    // unlink("/Users/ybourais/Desktop/minishell/yichiba");
+    // stat("/Users/ybourais/Desktop/minishell/note.txt", &s);
+    // printf("%lld\n", s.st_size);
+    //chdir("..");
+    // printf("%s\n", getcwd(input, 250));
+    // printf("%d\n", access("note.txt", W_OK | R_OK));
     return 0;
 }
 
-// int main() {
-//     // DIR *dir;
-//     // struct dirent *entry;
-
-//     // dir = opendir(".");
-
-//     // if (dir == NULL) {
-//     //     perror("opendir");
-//     //     return 1;
-//     // }
-
-//     // Read directory entries
-//     // while ((entry = readdir(dir)) != NULL) {
-//         // printf("\n");
-//     // }
-
-//     // Close the directory
-//     // closedir(dir);
-//     // int ioctl(int fildes, unsigned long request, ...);
-//     // char *getenv(const char *name);
-//     // int tcsetattr(int fildes, int optional_actions, const struct termios *termios_p);
-
-//     return 0;
-// }
-
-// int main() {
-
-//     char* clear_sequence = tgetstr("cl", NULL);
-//     tputs(clear_sequence, 1, putchar);
-//     printf("%s\n", clear_sequence);
-//     return 0;
-// }
