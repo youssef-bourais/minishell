@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 11:00:07 by ybourais          #+#    #+#             */
-/*   Updated: 2023/05/24 12:48:09 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:09:16 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@
 #include <termios.h> /* tcsetattr */
 #include <termcap.h> /* tgetent */
 
-void parssing(char *input);
-int appear_first(char *str);
+void ft_error(int n);
 void check_quoting(char *str);
-
+int nbr_words(char *str);
+int end_word(char *str);
+char **split(char *s);
+void free_tab(char **tab, int n);
 #endif

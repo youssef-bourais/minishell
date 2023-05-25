@@ -1,6 +1,6 @@
 NAME = minishell
 
-SRCS = minishell.c parssing.c
+SRCS = minishell.c parssing.c tools.c
 
 CC = cc
 
