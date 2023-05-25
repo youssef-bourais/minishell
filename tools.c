@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 09:12:41 by ybourais          #+#    #+#             */
-/*   Updated: 2023/05/25 20:49:08 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/05/25 20:53:20 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ char **split(char *str)
     {
         while (str[i] == ' ')
             i++;
-        if(str[i] == '\0')
-            break;
         int j = 0;
         arr[index] = malloc((sizeof(char) * word_len(str + i)) + 1);
         while (str[i] != ' ' && str[i] != '\0')
@@ -68,6 +66,5 @@ char **split(char *str)
         arr[index][j] = '\0';
         index++;
     }
-    arr[index] = 0;
     return arr;
 }
