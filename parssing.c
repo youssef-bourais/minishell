@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 10:05:20 by ybourais          #+#    #+#             */
-/*   Updated: 2023/05/25 18:08:19 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/05/27 17:06:37 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,22 @@ void check_quoting(char *str)
         j ++;
     }
     str[j] = '\0';
+}
+
+void modification(char **tab, int n, int t)
+{
+    int i = 0;
+    while (tab[i] != NULL)
+    {
+        int j = 0;
+        while (tab[i][j] != '\0')
+        {
+            if (tab[i][j] == n)
+            {
+                tab[i][j] = t;
+            }
+            j++;
+        }
+        i++; 
+    }
 }

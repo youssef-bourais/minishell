@@ -6,16 +6,16 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 09:12:41 by ybourais          #+#    #+#             */
-/*   Updated: 2023/05/25 20:53:20 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/05/27 16:30:15 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void free_tab(char **tab, int n)
+void free_tab(char **tab)
 {
     int i = 0;
-    while (i < n)
+    while (tab[i] != NULL)
         free(tab[i++]);
     free(tab);
 }
@@ -36,6 +36,7 @@ int nbr_words(char *str)
 int word_len(char *str)
 {
     int i = 0;
+
     while (str[i] != '\0')
     {
         if (str[i] != ' ' && (str[i + 1] == ' ' || str[i + 1] == '\0'))
@@ -47,7 +48,7 @@ int word_len(char *str)
 
 char **split(char *str)
 {
-    char **arr = malloc((sizeof(char *) * nbr_words(str)) + 1);
+    char **arr = malloc(sizeof(char *) * (nbr_words(str) + 1));
 
     int i = 0;
     int index = 0;
@@ -56,7 +57,9 @@ char **split(char *str)
         while (str[i] == ' ')
             i++;
         int j = 0;
-        arr[index] = malloc((sizeof(char) * word_len(str + i)) + 1);
+        if (str[i] == '\0')
+            break;
+        arr[index] = malloc(sizeof(char) *( word_len(str + i) + 1));
         while (str[i] != ' ' && str[i] != '\0')
         {
             arr[index][j] = str[i];
@@ -66,5 +69,6 @@ char **split(char *str)
         arr[index][j] = '\0';
         index++;
     }
+    arr[index] = NULL;
     return arr;
 }

@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 11:00:07 by ybourais          #+#    #+#             */
-/*   Updated: 2023/05/25 18:09:16 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/05/27 17:06:53 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ void check_quoting(char *str);
 int nbr_words(char *str);
 int end_word(char *str);
 char **split(char *s);
-void free_tab(char **tab, int n);
+void free_tab(char **tab);
+void modification(char **tab, int n, int t);
 #endif
