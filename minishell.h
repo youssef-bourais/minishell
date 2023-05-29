@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 11:00:07 by ybourais          #+#    #+#             */
-/*   Updated: 2023/05/27 17:06:53 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/05/29 18:00:16 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@
 #include <sys/ioctl.h> /* ioctl */
 #include <termios.h> /* tcsetattr */
 #include <termcap.h> /* tgetent */
+#include <string.h>
 
 void ft_error(int n);
-void check_quoting(char *str);
+int *check_quoting(char *str);
 int nbr_words(char *str);
-int end_word(char *str);
+int word_len(char *str);
 char **split(char *s);
 void free_tab(char **tab);
 void modification(char **tab, int n, int t);
+int valid_dollar(char *str);
+int real_lenth(char *str);
+
 #endif
