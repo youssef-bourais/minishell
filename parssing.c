@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 10:05:20 by ybourais          #+#    #+#             */
-/*   Updated: 2023/05/29 18:44:00 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/05/30 12:54:39 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int *check_quoting(char *str)
         else if(str[i] == 34 || str[i] == 39)
         {
             quote = str[i++];
-            if (quote == 34 && str[i] == 34 && str[i + 1] == ' ')
+            if (quote == 34 && str[i] == 34 && (str[i + 1] == ' ' || str[i + 1] == '\0'))
                 str[j++] = 25;
             while (str[i] != quote)
             {
@@ -133,6 +133,9 @@ int *check_quoting(char *str)
 void modification(char **tab, int n, int t)
 {
     int i = 0;
+    if (tab == NULL)
+        return ;
+    
     while (tab[i] != NULL)
     {
         int j = 0;

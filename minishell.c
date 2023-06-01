@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:39 by ybourais          #+#    #+#             */
-/*   Updated: 2023/05/29 18:51:06 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/05/30 11:37:39 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int main()
 {
     char *input;
     int *arr;
-    int **tab;
+    char **tab;
 
     while(1)
     {
@@ -75,13 +75,12 @@ int main()
         add_history(input);
         valid_dollar(input);// nbr $
         arr = check_quoting(input); // struct {arr of dollar in "" and '', the string parssed}
-        modification(tab, 25, ' ');
         tab = split(input);
-        // int i = 0;
-        // i = 0;
-        // while (tab[i] != NULL)
-        //     printf("%s\n", tab[i++]);
-        // free_tab(tab);
+        modification(tab, 25, ' ');
+        int i = 0;
+        while (tab[i] != NULL)
+            printf("%s\n", tab[i++]);
+        free_tab(tab);
     }
     return 0;
 }
