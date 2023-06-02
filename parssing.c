@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 10:05:20 by ybourais          #+#    #+#             */
-/*   Updated: 2023/05/30 12:54:39 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/02 11:36:28 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 void ft_error(int n)
 {
-    if(n == 1)
-    {
-        write(n, "Error\n", 6);
-        exit(n);
-    }
+    write(n, "Error\n", 6);
+    exit(n);
 }
 
 int valid_dollar(char *str)
@@ -48,7 +45,6 @@ int valid_dollar(char *str)
     }
     return counter;
 }
-
 
 int real_lenth(char *str)
 {
@@ -84,7 +80,7 @@ int arr_dollar(int *arr, int quote, int indice)
     else if(quote == 39)
         arr[indice++] = quote;
     else if (quote == 0)
-        arr[indice++] = 0;
+        arr[indice++] = -1;
     return indice;
 }
 
@@ -132,10 +128,11 @@ int *check_quoting(char *str)
 
 void modification(char **tab, int n, int t)
 {
-    int i = 0;
+
     if (tab == NULL)
         return ;
-    
+
+    int i = 0;
     while (tab[i] != NULL)
     {
         int j = 0;
