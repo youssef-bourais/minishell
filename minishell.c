@@ -24,14 +24,13 @@ int search(char *str, int c)
     return 0;
 }
 
-int is_alphanumeric(char *str, int *p)
+int is_alphanumeric(char *str)
 {
     int i = 0;
     while (str[i] != '\0')
     {
         if (str[i] == '=')
         {
-            *p = i + 1;
             i = 0;
             while (str[i] != '=')
             {
@@ -82,22 +81,38 @@ int slen(char *str)
     return i;
 }
 
-typedef struct  Node 
+void copystr(char *dst, char *src)
 {
-    char *var;
-    struct Node *next;
-}               Node;
+    int i = 0;
+    while (src[i] != '\0')
+    {
+        dst[i] = src[i];
+        i++;
+    }
+    dst[i] = '\0';
+}
+
+t_var *store_variabl(char *input)
+{
+    t_var *new_node = malloc(sizeof(t_var));
+    new_node->var = malloc((slen(input) + 1) * sizeof(char));
+
+    copystr(new_node->var, input);
+    new_node->next = NULL;
+
+    return new_node;
+}
 
 int main()
 {
     char *input;
     int *arr;
-    // char **tab;
+    char **tab;
     int i = 0;
-    // int j = 0;
-    int k = 0;
-    Node *head = NULL;
-    Node *current = NULL;
+
+    t_var *temp;
+    t_var *head = NULL;
+    t_var *current;
 
     while(1)
     {
@@ -105,54 +120,38 @@ int main()
         add_history(input);
         // valid_dollar(input);// nbr $
         arr = check_quoting(input);
-
-        if (is_alphanumeric(input, &k))
+        if (is_alphanumeric(input))
         {
-            Node *new_node = malloc(sizeof(Node));
-            new_node->var = malloc((slen(input) + 1) * sizeof(char));
-            strcpy(new_node->var, input);
-            new_node->next = NULL;
-            if (head == NULL) 
-            {
-                head = new_node;
-                current = new_node;
-            } 
-            else 
-            {
-                current->next = new_node;
-                current = new_node;
-            }    
-            printf("%s\n", new_node->var);
+            temp = store_variabl(input);
+            temp->next = head;
+            head = temp;
         }
-        // else
-        // {
-        //     tab = split(input);
-        //     modification(tab, 25, ' ');
-        //     i = 0;
-        //     while (tab[i] != NULL)
-        //     {
-        //         printf("%s\n", tab[i++]);
-        //     }
-        //     free_tab(tab);
-        // }
+        else
+        {
+            tab = split(input);
+            modification(tab, 25, ' ');
+            i = 0;
+            while (tab[i] != NULL)
+            {
+                printf("%s\n", tab[i++]);
+            }
+            free_tab(tab);
+        }
+        current = head;
+        while (current != NULL) 
+        {
+            printf("%s->", current->var);
+            current = current->next;
+        }
     }
-    // Print the linked list for verification
     current = head;
     while (current != NULL) 
     {
-        printf("%s ", current->var);
+        t_var* temp = current;
         current = current->next;
+        free(temp->var);
+        free(temp);
     }
-
-    // // Free allocated memory
-    // current = head;
-    // while (current != NULL) 
-    // {
-    //     Node* temp = current;
-    //     current = current->next;
-    //     free(temp->var);
-    //     free(temp);
-    // }
     return 0;
 }
 
@@ -165,51 +164,52 @@ int main()
 //     struct node *next;
 // } t_node;
 
-// t_node *creat_node(int value)
-// {
-//     t_node *v = malloc(sizeof(t_node));
-//     v->value = value;
-//     v->next = NULL;
-//     return v;
-// }
 
-// void printlist(t_node *head)
+// void printlist(t_var *head)
 // {
-//     t_node *tmp = head;
+//     t_var *tmp = head;
 //     while (tmp != NULL)
 //     {
-//         printf("%d->", tmp->value);
+//         printf("%s->", tmp->value);
 //         tmp = tmp->next;
 //     }
 //     printf("\n");
 // }
 
-// void free_list(t_node* head) 
+// void free_list(t_var* head) 
 // {
-//     t_node* current = head;
+//     t_var* current = head;
 
 //     while (current != NULL) 
 //     {
-//         t_node* temp = current;
+//         t_var* temp = current;
 //         current = current->next;
 //         free(temp);
 //     }
 // }
 
+// t_var *creat_node(char *str)
+// {
+//     t_var *v = malloc(sizeof(t_var));
+//     v->var = malloc(sizeof(char)* slen(str) + 1);
+//     copystr(v->var, str);
+//     v->next = NULL;
+//     return v;
+// }
+
 // int main()
 // {
-//     t_node *head = NULL;
-//     t_node *temp;
+//     t_var *head = NULL;
+//     t_var *temp;
 
 //     int i = 0;
 //     while (i < 25)
 //     {
-//         temp = creat_node(i); // creat node and the node.next point to null
+//         temp = creat_node("i + '0'"); // creat node and the node.next point to null
 //         temp->next = head; // the next node point to head (null) in i = 0; or 23 in i = 24
 //         head = temp; // the head point to temp; head is i = 0...24;
 //         i++;
 //     }
-
 //     printlist(head);
 //     free_list(head);
 // }

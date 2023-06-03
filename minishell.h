@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 11:00:07 by ybourais          #+#    #+#             */
-/*   Updated: 2023/05/29 18:00:16 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/03 10:57:43 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@
 #include <termios.h> /* tcsetattr */
 #include <termcap.h> /* tgetent */
 #include <string.h>
+
+typedef struct  env_var 
+{
+    char *var;
+    struct env_var *next;
+} t_var;
 
 void ft_error(int n);
 int *check_quoting(char *str);
