@@ -103,57 +103,108 @@ t_var *store_variabl(char *input)
     return new_node;
 }
 
-int main()
+char **env_tab(void)
 {
-    char *input;
-    int *arr;
-    char **tab;
-    int i = 0;
+    static char *tab[] = {"TERM_PROGRAM" ,"TERM" ,"HOMEBREW_TEMP" ,"SHELL" ,"TMPDIR" ,"TERM_PROGRAM_VERSION" ,
+        "ZDOTDIR" ,"ORIGINAL_XDG_CURRENT_DESKTOP" ,"MallocNanoZone" ,"USER" ,"SSH_AUTH_SOCK" ,
+        "__CF_USER_TEXT_ENCODING" ,"HOMEBREW_CACHE" ,"PATH" ,"LaunchInstanceID" ,"USER_ZDOTDIR" ,
+        "PWD" ,"LANG" ,"VSCODE_GIT_ASKPASS_EXTRA_ARGS" ,"XPC_FLAGS" ,"XPC_SERVICE_NAME" ,
+        "VSCODE_INJECTION" ,"SHLVL" ,"HOME" ,"VSCODE_GIT_ASKPASS_MAIN" ,"LOGNAME" ,
+        "VSCODE_GIT_IPC_HANDLE" ,"VSCODE_GIT_ASKPASS_NODE" ,"GIT_ASKPASS" ,"SECURITYSESSIONID" ,"COLORTERM" ,
+        "_" , NULL};
 
-    t_var *temp;
-    t_var *head = NULL;
-    t_var *current;
-
-    while(1)
-    {
-        input = readline("\e[1;32mmy_Shell-310$ \e[0m");
-        add_history(input);
-        // valid_dollar(input);// nbr $
-        arr = check_quoting(input);
-        if (is_alphanumeric(input))
-        {
-            temp = store_variabl(input);
-            temp->next = head;
-            head = temp;
-        }
-        else
-        {
-            tab = split(input);
-            modification(tab, 25, ' ');
-            i = 0;
-            while (tab[i] != NULL)
-            {
-                printf("%s\n", tab[i++]);
-            }
-            free_tab(tab);
-        }
-        current = head;
-        while (current != NULL) 
-        {
-            printf("%s->", current->var);
-            current = current->next;
-        }
-    }
-    current = head;
-    while (current != NULL) 
-    {
-        t_var* temp = current;
-        current = current->next;
-        free(temp->var);
-        free(temp);
-    }
-    return 0;
+    return tab;
 }
+
+char *join(char *s1, char *s2)
+{
+    char *str = malloc(sizeof(char) * (slen(s1) + slen(s2) + 1));
+
+    copystr(str, s1);
+    copystr(str + slen(s1), s2);
+    return str;
+}
+
+char **env_(char **tab, int len)
+{
+    int i = 0;
+    char **env = malloc(sizeof(char *)*(len + 1));
+    char *tmp;
+
+    while (tab[i])
+    {
+        env[i] = join(tab[i], "=");
+        tmp = getenv(env[i]);
+        env[i] = join(env[i], tmp);
+        i++;
+    }
+    env[i] = 0;
+    return env;
+}
+
+int main(int ac, char **av, char **env)
+{
+    (void)ac;
+    (void)av;
+    // char *input;
+    // int *arr;
+    // int i = 0;
+    // char **tab;
+    // char **env;
+
+    // t_var *temp;
+    // t_var *head = NULL;
+    // t_var *current;
+
+    // tab = env_tab();
+    // env = env_(tab, 34);
+    for (int i = 0; env[i]; i++)
+    {
+        printf("%s\n", env[i]);
+    }
+    exit(0);
+    // while(1)
+    // {
+    //     system("ls");
+    //     exit(0);
+    //     input = readline("\e[1;32mmy_Shell-310$ \e[0m");
+    //     add_history(input);
+    //     arr = check_quoting(input);
+    //     tab = split(input);
+    //     modification(tab, 25, ' ');
+    //     i = 0;
+    //     while (tab[i] != NULL)
+    //     {
+    //         printf("%s\n", tab[i++]);
+    //     }
+    //     free_tab(tab);
+    // }
+    // return 0;
+}
+
+    // current = head;
+    // while (current != NULL) 
+    // {
+    //     t_var* temp = current;
+    //     current = current->next;
+    //     free(temp->var);
+    //     free(temp);
+    // }
+        // }
+        // current = head;
+        // while (current != NULL) 
+        // {
+        //     printf("%s->", current->var);
+        //     current = current->next;
+        // }
+        // if (is_alphanumeric(input))
+        // {
+        //     temp = store_variabl(input);
+        //     temp->next = head;
+        //     head = temp;
+        // }
+        // else
+        // {
 
 // #include <stdio.h>
 // #include <stdlib.h>
