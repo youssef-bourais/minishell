@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 11:00:07 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/05 16:17:43 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/06 12:04:49 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@
 #include <termcap.h> /* tgetent */
 #include <string.h>
 
-typedef struct  env_var 
+typedef struct  node 
 {
     char *var;
-    struct env_var *next;
-} t_var;
+    struct node *next;
+} node;
 
 void ft_error(int n);
 int *check_quoting(char *str);
