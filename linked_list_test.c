@@ -27,10 +27,13 @@ t_node *inseart_node(t_node *head, int value)
     return head;
 }
 
-void delete_node(t_node *head, int value)
+t_node *delete_node(t_node *head, int value)
 {
     t_node *curr;
     t_node *prev;
+    t_node *new_node = malloc(sizeof(t_node));
+    new_node->data = 200;
+
 
     curr = head;
     prev = head;
@@ -39,18 +42,19 @@ void delete_node(t_node *head, int value)
     {
         head = curr->next;
         free(curr);
-        return ;
+        return head;
     }
-
     while (curr->data != value)
     {
         prev = curr;
         curr = curr->next;
     }
-    prev->next = curr->next;
+    prev->next = new_node;
+    new_node->next = curr->next->next;
     free(curr);
+    return head;
 }
- 
+
 int main()
 {
     t_node *head = NULL;
@@ -60,12 +64,13 @@ int main()
     while (i < 30)
         head = inseart_node(head, i++);
 
-    delete_node(head, 19);
- 
+    head = delete_node(head, 18);
+
     tmp = head;
     while (tmp != NULL)
     {
         printf("%d->", tmp->data);
         tmp = tmp->next;
     }
+    printf("\n");
 }

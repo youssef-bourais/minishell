@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 11:00:07 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/06 12:04:49 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/12 17:14:07 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct  node
 {
     char *var;
     struct node *next;
-} node;
+} t_node;
 
 void ft_error(int n);
 int *check_quoting(char *str);
@@ -42,5 +42,6 @@ void free_tab(char **tab);
 void modification(char **tab, int n, int t);
 int valid_dollar(char *str);
 int real_lenth(char *str);
+t_node *replace_node(t_node *head, char *new, char *to_delete);
 
 #endif

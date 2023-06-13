@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:39 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/12 12:15:19 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/13 18:00:24 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ int copy_tab(char **tab1, char **tab2)
         copy_str(tab1[i], tab2[i]);
         i++;
     }
+    tab1[i] = 0;
     return i;
 }
 
@@ -149,66 +150,206 @@ int strchrch(char *str, char c)
     return 0;
 }
 
-char **add_to_env(char *str, char **env)
-{
-    int i = 0;
-    static int num;
-    int len;
-    int h;
-    h = strchrch(str, '=');
-    i = 0;
-    while (env[i])
-    {
-        if (compare_until(str, env[i], h))
-        {
-            free(env[i]);
-            env[i] = malloc(sizeof(char) * slen(str) + 1);
-            copy_str(env[i], str);
-            return env;
-        }
-        i++;
-    }
-    i = 0;
-    while (env[i]) 
-        i++;
-    int new_len = i + 2;
-    char **env_copy = malloc(sizeof(char *) * new_len);
-    len = copy_tab(env_copy, env);
-    env_copy[len] = malloc(sizeof(char) * slen(str) + 1);
+// char **add_to_env(char *str, char **env)
+// {
+//     int i = 0;
+//     static int num;
+//     int len;
+//     int h;
+//     h = strchrch(str, '=');
+//     i = 0;
+//     while (env[i])
+//     {
+//         if (compare_until(str, env[i], h))
+//         {
+//             free(env[i]);
+//             env[i] = malloc(sizeof(char) * slen(str) + 1);
+//             copy_str(env[i], str);
+//             return env;
+//         }
+//         i++;
+//     }
+//     i = 0;
+//     while (env[i])
+//         i++;
+//     int new_len = i + 2;
+//     char **env_copy = malloc(sizeof(char *) * new_len);
+//     len = copy_tab(env_copy, env);
+//     env_copy[len] = malloc(sizeof(char) * slen(str) + 1);
 
-    copy_str(env_copy[len], str);
-    env_copy[len + 1] = NULL;
-    i = 0;
-    if(num!= 0)
+//     copy_str(env_copy[len], str);
+//     env_copy[len + 1] = NULL;
+//     i = 0;
+//     if(num!= 0)
+//     {
+//         free_tab(env);
+//         env = malloc(sizeof(char *) * new_len);
+//     }
+//     if(num == 0)
+//         env = malloc(sizeof(char *) * new_len);
+//     len = copy_tab(env, env_copy);
+//     env[len + 1] = NULL;
+//     free_tab(env_copy);
+//     num++;
+//     return env;
+// }
+
+t_node *creat_list(t_node *head, char *env)
+{
+    t_node *new_node = malloc(sizeof(t_node));
+    new_node->var = malloc(sizeof(char) * slen(env) + 1);
+    copy_str(new_node->var, env);
+    new_node->next = NULL;
+    if(head == NULL)
+        head = new_node;
+    else
     {
-        free_tab(env);
-        env = malloc(sizeof(char *) * new_len);
+        t_node *tmp = head;
+        while (tmp->next != NULL)
+            tmp = tmp->next;
+        tmp->next = new_node;
     }
-    if(num == 0)
-        env = malloc(sizeof(char *) * new_len);
-    len = copy_tab(env, env_copy);
-    env[len + 1] = NULL;
-    free_tab(env_copy);
-    num++;
-    return env;
+    return head;
 }
 
-char **commands(char **tab, char **env)
+t_node *search_list(t_node *head, char *str, int *p)
 {
-    int i;
+    t_node *tmp;
+    tmp = head;
+
+    while (tmp)
+    {
+        if (compare_until(tmp->var, str, strchrch(tmp->var, '=')))
+        {
+            head = replace_node(head, str, tmp->var);
+            *p = 1;
+            return head;
+        }
+        tmp = tmp->next;
+    }
+    *p = 0;
+    return head;
+}
+
+t_node *replace_node(t_node *head, char *new, char *to_delete)
+{
+    t_node *new_node;
+    new_node = malloc(sizeof(t_node));
+    new_node->var = malloc(sizeof(char) * slen(new) + 1);
+    copy_str(new_node->var, new);
+
+    t_node *curr;
+    curr = head;
+    if(compare(curr->var, to_delete))
+    {
+        new_node->next = head->next;
+        head = new_node;
+        free(curr->var);
+        free(curr);
+        return head;
+    }
+    t_node *prev;
+    curr = head;
+    prev = head;
+    while (!compare(curr->var, to_delete))
+    {
+        prev = curr;
+        curr = curr->next;
+    }
+    prev->next = new_node;
+    new_node->next = curr->next;
+    free(curr->var);
+    free(curr);
+    return head;
+}
+
+// t_node *replace_node(t_node *head, char *new, char *to_delete)
+// {
+//     t_node *tmp;
+//     t_node *prev;
+//     t_node *new_node;
+
+//     tmp = head;
+//     prev = head;
+
+//     if (compare(tmp->var, to_delete))
+//     {
+//         new_node = malloc(sizeof(t_node));
+//         new_node->var = malloc(sizeof(char) * slen(new) + 1);
+//         copy_str(new_node->var, new);
+//         new_node->next = tmp->next;
+//         free(tmp->var);
+//         free(tmp);
+//         head = new_node;
+//         return head;
+//     }
+//     while (!compare(tmp->var, to_delete))
+//     {
+//         prev = tmp;//
+//         tmp = tmp->next;//
+//     }
+//     prev->next = tmp->next;
+//     free(tmp->var);
+//     free(tmp);
+//     new_node = malloc(sizeof(t_node));
+//     new_node->var = malloc(sizeof(char) * slen(new) + 1);
+//     copy_str(new_node->var, new);
+//     new_node->next = prev->next;//
+//     prev->next = new_node;//
+//     return head;
+// }
+
+t_node *unset_node(t_node *head, char *to_delete)
+{
+    t_node *curr;
+    t_node *prev;
+    
+    curr = head;
+    prev = head;
+    while (!compare(curr->next->var, to_delete))
+    {
+        prev = curr;
+        curr = curr->next;
+    }
+    prev = curr->next;
+    free(curr->var);
+    free(curr);
+    return head;
+}
+
+t_node *commands(char **tab, char **env, t_node *head)
+{
+    t_node *tmp;
+    int i = 0;
+    int p = 0;
+    static int num;
+
+    if(num == 0)
+    {
+        while (env[i])
+            head = creat_list(head, env[i++]); // try other solution to creat linked list
+        num++;
+    }
     if (compare(tab[0], "export"))
     {
         if (tab[0] && !tab[1])
         {
-            i = 0;
-            while (env[i])
-                printf("declare -x %s\n", env[i++]);
+            tmp = head;
+            while (tmp != NULL)
+            {
+                printf("declare -x %s\n", tmp->var);
+                tmp= tmp->next;
+            }
         }
         i = 1;
         while (tab[i])
         {
             if (is_alphanumeric(tab[i]))
-                env = add_to_env(tab[i], env);
+            {
+                head = search_list(head, tab[i], &p);
+                if (!p)
+                    head = creat_list(head, tab[i]);
+            }
             else
                 printf("my Shell: no matches found: %s\n", tab[i]);
             i++;
@@ -228,13 +369,25 @@ char **commands(char **tab, char **env)
     }
     else if (compare(tab[0], "env"))
     {
-        i = 0;
-        while (env[i])
-            printf("%s\n", env[i++]);
+        tmp = head;
+        while (tmp != NULL)
+        {
+            printf("%s\n", tmp->var);
+            tmp= tmp->next;
+        }
+    }
+    else if (compare(tab[0], "unset") && tab[1])
+    {
+        int j = 1;
+        while (tab[j])
+        {
+            head = unset_node(head, tab[j]);
+            j++;
+        }
     }
     else
         printf("%s command not found\n", tab[0]);
-    return(env);
+    return(head);
 }
 
 int main(int ac, char **av, char **env)
@@ -245,6 +398,12 @@ int main(int ac, char **av, char **env)
     char *input;
     char **tab;
     int *arr;
+    t_node *head = NULL;
+    int i = 0;
+    while (env[i])
+        i++;
+    char **my_env = malloc(sizeof(char *) * i + 1);
+    copy_tab(my_env, env);
 
     while(1)
     {
@@ -253,7 +412,7 @@ int main(int ac, char **av, char **env)
         arr = check_quoting(input);
         tab = split(input);
         modification(tab, 25, ' ');
-        env = commands(tab, env);
+        head = commands(tab, my_env, head);
         free_tab(tab);
     }
     return 0;
