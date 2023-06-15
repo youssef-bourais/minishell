@@ -6,11 +6,12 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:39 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/13 18:00:24 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/15 16:18:10 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 int search(char *str, int c)
 {
@@ -92,7 +93,6 @@ void copy_str(char *dst, char *src)
     dst[i] = '\0';
 }
 
-
 char *join(char *s1, char *s2)
 {
     char *str = malloc(sizeof(char) * (slen(s1) + slen(s2) + 1));
@@ -105,6 +105,7 @@ char *join(char *s1, char *s2)
 int compare(char *s1, char *s2)
 {
     int i = 0;
+    
     while (s1[i] && s1[i])
     {
         if (s1[i] != s2[i])
@@ -113,14 +114,17 @@ int compare(char *s1, char *s2)
     }
     return 1;
 }
+
 int compare_until(char *s1, char *s2, int n)
 {
-    int i = 0;
+    int i;
+    i = 0;
     while (i < n)
     {
-        if (s1[i] != s2[i])
+        if (s1[i] == s2[i])
+            i++;
+        else
             return 0;
-        i++;
     }
     return 1;
 }
@@ -149,50 +153,6 @@ int strchrch(char *str, char c)
     }
     return 0;
 }
-
-// char **add_to_env(char *str, char **env)
-// {
-//     int i = 0;
-//     static int num;
-//     int len;
-//     int h;
-//     h = strchrch(str, '=');
-//     i = 0;
-//     while (env[i])
-//     {
-//         if (compare_until(str, env[i], h))
-//         {
-//             free(env[i]);
-//             env[i] = malloc(sizeof(char) * slen(str) + 1);
-//             copy_str(env[i], str);
-//             return env;
-//         }
-//         i++;
-//     }
-//     i = 0;
-//     while (env[i])
-//         i++;
-//     int new_len = i + 2;
-//     char **env_copy = malloc(sizeof(char *) * new_len);
-//     len = copy_tab(env_copy, env);
-//     env_copy[len] = malloc(sizeof(char) * slen(str) + 1);
-
-//     copy_str(env_copy[len], str);
-//     env_copy[len + 1] = NULL;
-//     i = 0;
-//     if(num!= 0)
-//     {
-//         free_tab(env);
-//         env = malloc(sizeof(char *) * new_len);
-//     }
-//     if(num == 0)
-//         env = malloc(sizeof(char *) * new_len);
-//     len = copy_tab(env, env_copy);
-//     env[len + 1] = NULL;
-//     free_tab(env_copy);
-//     num++;
-//     return env;
-// }
 
 t_node *creat_list(t_node *head, char *env)
 {
@@ -263,57 +223,76 @@ t_node *replace_node(t_node *head, char *new, char *to_delete)
     return head;
 }
 
-// t_node *replace_node(t_node *head, char *new, char *to_delete)
-// {
-//     t_node *tmp;
-//     t_node *prev;
-//     t_node *new_node;
+int compare_len(char *to_delete, char *list_var)
+{
+    char str[slen(list_var)];
+    int indice = strchrch(list_var, '=');
+    int i = 0;
+    while (i < indice)
+    {
+        str[i] = list_var[i];
+        i++;
+    }
+    str[i] = '\0';
+    printf("%d %d\n", slen(str), slen(to_delete));
+    if(slen(str) != slen(to_delete))
+        return 0;
+    else
+        if(compare(to_delete, str))
+            return 1;
+    return 0;
+}
 
-//     tmp = head;
-//     prev = head;
+int find_value(t_node *head, char *str)
+{
+    t_node *curr;
+    t_node *after;
 
-//     if (compare(tmp->var, to_delete))
-//     {
-//         new_node = malloc(sizeof(t_node));
-//         new_node->var = malloc(sizeof(char) * slen(new) + 1);
-//         copy_str(new_node->var, new);
-//         new_node->next = tmp->next;
-//         free(tmp->var);
-//         free(tmp);
-//         head = new_node;
-//         return head;
-//     }
-//     while (!compare(tmp->var, to_delete))
-//     {
-//         prev = tmp;//
-//         tmp = tmp->next;//
-//     }
-//     prev->next = tmp->next;
-//     free(tmp->var);
-//     free(tmp);
-//     new_node = malloc(sizeof(t_node));
-//     new_node->var = malloc(sizeof(char) * slen(new) + 1);
-//     copy_str(new_node->var, new);
-//     new_node->next = prev->next;//
-//     prev->next = new_node;//
-//     return head;
-// }
+    curr = head;
+    after = head;
+
+    while (curr)
+    {
+        if(!compare_len(str, curr->var))
+        {
+            after = curr;
+            curr = after->next;
+        }
+        else
+            return 1;
+    }
+    return 0;
+}
 
 t_node *unset_node(t_node *head, char *to_delete)
 {
     t_node *curr;
     t_node *prev;
-    
+
     curr = head;
     prev = head;
-    while (!compare(curr->next->var, to_delete))
+
+    if(!find_value(head, to_delete))
+        return head;
+    else
     {
-        prev = curr;
-        curr = curr->next;
+        if(compare_len(to_delete, curr->var))
+        {
+            head = curr->next;
+            free(curr->var);
+            free(curr);
+            return head;
+        }
+        while (!compare_len(to_delete, curr->var))
+        {
+            prev = curr;
+            curr = curr->next;
+        }
+        prev->next = curr->next;
+        free(curr->var);
+        free(curr);
+        return head;
     }
-    prev = curr->next;
-    free(curr->var);
-    free(curr);
     return head;
 }
 
@@ -327,7 +306,7 @@ t_node *commands(char **tab, char **env, t_node *head)
     if(num == 0)
     {
         while (env[i])
-            head = creat_list(head, env[i++]); // try other solution to creat linked list
+            head = creat_list(head, env[i++]);
         num++;
     }
     if (compare(tab[0], "export"))
@@ -341,18 +320,21 @@ t_node *commands(char **tab, char **env, t_node *head)
                 tmp= tmp->next;
             }
         }
-        i = 1;
-        while (tab[i])
+        else
         {
-            if (is_alphanumeric(tab[i]))
+            i = 1;
+            while (tab[i])
             {
-                head = search_list(head, tab[i], &p);
-                if (!p)
-                    head = creat_list(head, tab[i]);
+                if (is_alphanumeric(tab[i]))
+                {
+                    head = search_list(head, tab[i], &p);
+                    if (!p)
+                        head = creat_list(head, tab[i]);
+                }
+                else
+                    printf("my Shell: no matches found: %s\n", tab[i]);
+                i++;
             }
-            else
-                printf("my Shell: no matches found: %s\n", tab[i]);
-            i++;
         }
     }
     else if (compare(tab[0], "echo"))
@@ -386,7 +368,7 @@ t_node *commands(char **tab, char **env, t_node *head)
         }
     }
     else
-        printf("%s command not found\n", tab[0]);
+        printf("%s ERROR\n", tab[0]);
     return(head);
 }
 

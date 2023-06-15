@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 11:00:07 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/12 17:14:07 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/15 14:44:51 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ void modification(char **tab, int n, int t);
 int valid_dollar(char *str);
 int real_lenth(char *str);
 t_node *replace_node(t_node *head, char *new, char *to_delete);
+int compare_len(char *to_delete, char *list_var);
 
 #endif
