@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 12:52:38 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/19 15:05:18 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:15:30 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,19 @@ void echo (char **tab)
         i++;
     }
     printf("\n");
+}
+
+void echo_n (char **tab)
+{
+    int i = 0;
+    i = 2;
+    while (tab[i])
+    {
+        printf("%s", tab[i]);
+        if(tab[i][0] != ' ' && tab[i + 1])
+            printf(" ");
+        i++;
+    }
 }
 
 void env(t_node *head)

@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 11:00:07 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/19 15:14:51 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:12:59 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ typedef struct  node
 
 /*minishell*/
 t_node *commands(char **tab, t_node *head);
+t_node *creat_env(t_node *head, char **env);
 
 /*builtin*/
 void echo (char **tab);
+void echo_n (char **tab);
 void env(t_node *head);
 void print_export(char *str);
 t_node *unset(char **tab, t_node *head);

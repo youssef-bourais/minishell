@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 10:05:20 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/19 13:18:50 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:00:00 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ int *check_quoting(char *str)
 
 void modification(char **tab, int n, int t)
 {
-
     if (tab == NULL)
         return ;
 
