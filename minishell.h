@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 11:00:07 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/15 14:44:51 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:14:51 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,49 @@ typedef struct  node
     struct node *next;
 } t_node;
 
+/*minishell*/
+t_node *commands(char **tab, t_node *head);
+
+/*builtin*/
+void echo (char **tab);
+void env(t_node *head);
+void print_export(char *str);
+t_node *unset(char **tab, t_node *head);
+t_node *export(char **tab, t_node *head);
+
+/*builtin_utils*/
+t_node *replace_node(t_node *head, char *new, char *to_delete);
+t_node *search_list(t_node *head, char *str, int *p);
+t_node *creat_list(t_node *head, char *env);
+t_node *unset_node(t_node *head, char *to_delete);
+int find_value(t_node *head, char *str);
+
+/*parssing*/
 void ft_error(int n);
+int valid_dollar(char *str);
+int arr_dollar(int *arr, int quote, int indice);
 int *check_quoting(char *str);
+void modification(char **tab, int n, int t);
+
+/*parssing_tools*/
+void free_tab(char **tab);
+int slen(char *str);
 int nbr_words(char *str);
 int word_len(char *str);
 char **split(char *s);
-void free_tab(char **tab);
-void modification(char **tab, int n, int t);
-int valid_dollar(char *str);
-int real_lenth(char *str);
-t_node *replace_node(t_node *head, char *new, char *to_delete);
+
+/*tools*/
+void copy_str(char *dst, char *src);
+int copy_tab(char **tab1, char **tab2);
+char *join(char *s1, char *s2);
+int is_alphanumeric(char *str);
+int without_equal(char *str);
+
+/*tools_2*/
+int search(char *str, int c);
+int strchrch(char *str, char c);
 int compare_len(char *to_delete, char *list_var);
+int compare_until(char *s1, char *s2, int n);
+int compare(char *s1, char *s2);
 
 #endif

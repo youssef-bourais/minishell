@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 10:05:20 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/02 11:36:28 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/19 13:18:50 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,33 +44,6 @@ int valid_dollar(char *str)
         i ++;
     }
     return counter;
-}
-
-int real_lenth(char *str)
-{
-    int i = 0;
-    int len = 0;
-    int quote = 0;
-    while (str[i] != '\0')
-    {
-        if (str[i] != 34 && str[i] != 39)
-            len++;       
-        else if (str[i] == 34 || str[i] == 39)
-        {
-            quote = str[i++];
-            if (quote == 34 && str[i] == 34 && str[i + 1] == ' ')
-                len++;
-            while (str[i] != quote)
-            {
-                if (str[i] == '\0')
-                    return -1;
-                len++;
-                i++;
-            }
-        }
-        i++;
-    }
-    return len;
 }
 
 int arr_dollar(int *arr, int quote, int indice)
