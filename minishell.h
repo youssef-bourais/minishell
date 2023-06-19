@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 11:00:07 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/19 16:12:59 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/19 18:35:46 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ typedef struct  node
 } t_node;
 
 /*minishell*/
-t_node *commands(char **tab, t_node *head);
+t_node *commands(char **tab, t_node *head, int *arr);
 t_node *creat_env(t_node *head, char **env);
+char **var_expantion(int *arr, char **tab, t_node *head);
+char *find_value_dollar(t_node *head, char *str);
 
 /*builtin*/
 void echo (char **tab);
@@ -74,7 +76,7 @@ int is_alphanumeric(char *str);
 int without_equal(char *str);
 
 /*tools_2*/
-int search(char *str, int c);
+int search(char *str, char c);
 int strchrch(char *str, char c);
 int compare_len(char *to_delete, char *list_var);
 int compare_until(char *s1, char *s2, int n);

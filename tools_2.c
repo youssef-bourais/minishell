@@ -6,13 +6,13 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:23:32 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/19 15:06:15 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/19 18:07:25 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int search(char *str, int c)
+int search(char *str, char c)
 {
     int i = 0;
     while (str[i] != '\0')

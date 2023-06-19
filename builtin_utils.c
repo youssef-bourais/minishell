@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:13:58 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/19 15:06:11 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/19 19:24:02 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,3 +133,5 @@ int find_value(t_node *head, char *str)
     }
     return 0;
 }
+
+
