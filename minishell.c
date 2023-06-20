@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:39 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/19 19:24:05 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/20 19:28:11 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,6 @@ int main(int ac, char **av, char **env)
     int *arr;
     t_node *head = NULL;
 
-    // if(ac != 1 && !env)
-    //     return 1;
     head = creat_env(head, env);
     while(1)
     {
