@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:39 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/20 19:28:11 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:33:51 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ char *find_value_dollar(t_node *head, char *str)
 
 char **var_expantion(int *arr, char **tab, t_node *head)
 {
-    int i = 1;
+    int i;
     int k = 0;
-    
+
+    i = 1;
     while (tab[i])
     {
         if(search(tab[i], '$') && arr[k] == 34)
@@ -85,6 +86,8 @@ char **var_expantion(int *arr, char **tab, t_node *head)
                 tab[i] = find_value_dollar(head, str2);
             }
         }
+        else if(search(tab[i], '$') && arr[k] == 39)
+            k++;
         i++;
     }
     return tab;
@@ -125,7 +128,7 @@ int main(int ac, char **av, char **env)
 
     char *input;
     char **tab;
-    int *arr;
+    int *arr = {0};
     t_node *head = NULL;
 
     head = creat_env(head, env);
