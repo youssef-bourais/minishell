@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:39 by ybourais          #+#    #+#             */
-/*   Updated: 2023/07/05 14:29:30 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/07/05 15:06:47 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,12 @@ char **var_expantion(int *arr, char **tab, t_node *head)
                 free(tab[i]);
                 tab[i] = find_value_dollar(head, str);
             }
+            else
+            {
+                free(tab[i]);
+                tab[i] = malloc(sizeof(char));
+                copy_str(tab[i], " ");
+            }
         }
         else if(search(tab[i], '$') && arr[k] == -1)
         {
@@ -85,8 +91,14 @@ char **var_expantion(int *arr, char **tab, t_node *head)
                 free(tab[i]);
                 tab[i] = find_value_dollar(head, str2);
             }
+            else
+            {
+                free(tab[i]);
+                tab[i] = malloc(sizeof(char));
+                copy_str(tab[i], " ");
+            }
         }
-        else if(search(tab[i], '$') && arr[k] == 39)
+        else if(search(tab[i], '$') && arr[k] == 39 )
             k++;
         i++;
     }

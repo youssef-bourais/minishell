@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 10:05:20 by ybourais          #+#    #+#             */
-/*   Updated: 2023/07/05 14:41:26 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:43:25 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int *check_quoting(char *str)
             }
             str[j] = str[i];
         }
-        else if(str[i] == 34 || str[i] == 39) /* 39 ' */
+        else if(str[i] == 34 || str[i] == 39)
         {
             quote = str[i++];
             if (quote == 34 && str[i] == 34 && str[i - 1] == ' ' && (str[i + 1] == ' ' || str[i + 1] == '\0'))
