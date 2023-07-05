@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:23:32 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/19 18:07:25 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:36:29 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ int compare_len(char *to_delete, char *list_var)
     }
     str[i] = '\0';
     if(slen(str) != slen(to_delete))
-    {
         return 0;
-    }
     else
         if(compare(to_delete, str))
             return 1;

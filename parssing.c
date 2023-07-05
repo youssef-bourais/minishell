@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 10:05:20 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/21 17:30:01 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:41:26 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,39 @@ int arr_dollar(int *arr, int quote, int indice)
     return indice;
 }
 
+int is_valid(char *str)
+{
+    int i = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i] != 34 && str[i] != 39)
+            i++;
+        else if (str[i] == 34 || str[i] == 39)
+        {
+            int quot = str[i];
+            while (str[i] != quot)
+            {
+                if (str[i] == '\0')
+                    return 0;
+                i++;
+            }
+            i++;
+        }
+    }
+    return 1;
+}
+
 int *check_quoting(char *str)
 {
     int i;
     int j = 0;
     int quote = 0;
-    int *arr = malloc(sizeof(int) * valid_dollar(str));
+    int *arr;
     int k = 0;
+
+    arr = malloc(sizeof(int) * valid_dollar(str));
+    if(!arr)
+        ft_error(1);
 
     i = 0;
     while (str[i] != '\0')
@@ -72,15 +98,15 @@ int *check_quoting(char *str)
         {
             if (str[i] == '$')
             {
-                quote = 0;   
+                quote = 0;
                 k = arr_dollar(arr, quote, k);
             }
             str[j] = str[i];
         }
-        else if(str[i] == 34 || str[i] == 39)
+        else if(str[i] == 34 || str[i] == 39) /* 39 ' */
         {
             quote = str[i++];
-            if (quote == 34 && str[i] == 34 && (str[i + 1] == ' ' || str[i + 1] == '\0'))
+            if (quote == 34 && str[i] == 34 && str[i - 1] == ' ' && (str[i + 1] == ' ' || str[i + 1] == '\0'))
                 str[j++] = 25;
             while (str[i] != quote)
             {
@@ -92,7 +118,7 @@ int *check_quoting(char *str)
             }
             j--;
         }
-        i ++;    
+        i ++;
         j ++;
     }
     str[j] = '\0';
