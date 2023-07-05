@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 12:52:38 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/19 16:15:30 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/07/05 16:26:02 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,37 @@ t_node *unset(char **tab, t_node *head)
         j++;
     }
     return head;
+}
+
+void pwd(t_node *head)
+{
+    // t_node *curr;
+    // curr = head;
+    // while (curr)
+    // {
+    //     if (curr->var[0] == 'P' && curr->var[1] == 'W' && curr->var[2] == 'D')
+    //     {
+    //         printf("%s\n", curr->var + 4);
+    //         return;
+    //     }
+    //     curr = curr->next;
+    // }
+
+    (void)head;
+
+    if (getenv("PWD") != NULL)
+        printf("%s\n", getenv("PWD"));
+
+    // (void)head;
+    // char cwd[1024];
+    // if (getcwd(cwd, sizeof(cwd)) != NULL) 
+    //     printf("%s\n", cwd);
+}
+
+void cd() 
+{
+    if (chdir("/path/to/directory") == 0) 
+        printf("Directory changed successfully.\n");
+    else 
+        perror("chdir() error");
 }

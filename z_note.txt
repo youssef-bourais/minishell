@@ -100,7 +100,7 @@ Allow command substitution.	                                                    
 Allow array access.	                                                                                                | Do not allow array access.
 (*) and (@) can have a special meaning when encased in double quotes.                                               | (*) and (@) are always literals when encased in single quotes.
 Can be wrapped around single quotes or double quotes.Single quotes have no special meaning within double quotes.	| Single quotes are not allowed inside single quotes. Double quotes are treated literally within single quotes.
-When ($, (`), ("), (\) are encased in double quotes, they can be escaped with \ to prevent their special meaning.	| When ($, (`), ("), (\) are encased in single quotes, they retain their literal values.
+When $, (`), ("), (\) are encased in double quotes, they can be escaped with \ to prevent their special meaning.	| When $, (`), ("), (\) are encased in single quotes, they retain their literal values.
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 $ echo "$(echo "upg")"
