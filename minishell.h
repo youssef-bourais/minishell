@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 11:00:07 by ybourais          #+#    #+#             */
-/*   Updated: 2023/07/05 11:00:49 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/07/05 15:14:30 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_node *commands(char **tab, t_node *head, int *arr);
 t_node *creat_env(t_node *head, char **env);
 char **var_expantion(int *arr, char **tab, t_node *head);
 char *find_value_dollar(t_node *head, char *str);
+char **resize_and_find(char **tab, t_node *head, int i);
 
 /*builtin*/
 void echo (char **tab);

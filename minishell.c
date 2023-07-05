@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:39 by ybourais          #+#    #+#             */
-/*   Updated: 2023/07/05 15:06:47 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/07/05 15:13:38 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,30 @@ char *find_value_dollar(t_node *head, char *str)
     return NULL;
 }
 
+char **resize_and_find(char **tab, t_node *head, int i)
+{
+    char str[slen(tab[i])];
+    int j = 0;
+    while (j < slen(tab[i]) - 1)
+    {
+        str[j] = tab[i][j + 1];
+        j++;
+    }
+    str[j] = '\0';
+    if(find_value(head, str))
+    {
+        free(tab[i]);
+        tab[i] = find_value_dollar(head, str);
+    }
+    else
+    {
+        free(tab[i]);
+        tab[i] = malloc(sizeof(char));
+        copy_str(tab[i], " ");
+    }
+    return tab;
+}
+
 char **var_expantion(int *arr, char **tab, t_node *head)
 {
     int i;
@@ -54,49 +78,13 @@ char **var_expantion(int *arr, char **tab, t_node *head)
     {
         if(search(tab[i], '$') && arr[k] == 34)
         {
-            char str[slen(tab[i])];
-            int j = 0;
             k++;
-            while (j < slen(tab[i]) - 1)
-            {
-                str[j] = tab[i][j + 1];
-                j++;
-            }
-            str[j] = '\0';
-            if(find_value(head, str))
-            {
-                free(tab[i]);
-                tab[i] = find_value_dollar(head, str);
-            }
-            else
-            {
-                free(tab[i]);
-                tab[i] = malloc(sizeof(char));
-                copy_str(tab[i], " ");
-            }
+            tab = resize_and_find(tab, head, i);
         }
         else if(search(tab[i], '$') && arr[k] == -1)
         {
-            char str2[slen(tab[i])];
-            int j = 0;
             k++;
-            while (j < slen(tab[i]) - 1)
-            {
-                str2[j] = tab[i][j + 1];
-                j++;
-            }
-            str2[j] = '\0';
-            if(find_value(head, str2))
-            {
-                free(tab[i]);
-                tab[i] = find_value_dollar(head, str2);
-            }
-            else
-            {
-                free(tab[i]);
-                tab[i] = malloc(sizeof(char));
-                copy_str(tab[i], " ");
-            }
+            tab = resize_and_find(tab, head, i);
         }
         else if(search(tab[i], '$') && arr[k] == 39 )
             k++;
