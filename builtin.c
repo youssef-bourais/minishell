@@ -6,13 +6,13 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 12:52:38 by ybourais          #+#    #+#             */
-/*   Updated: 2023/07/05 16:26:02 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/07/06 17:33:20 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_node *export(char **tab, t_node *head)
+t_node *ft_export(char **tab, t_node *head)
 {
     t_node *tmp;
     int i = 0;
@@ -98,13 +98,39 @@ void echo_n (char **tab)
     }
 }
 
+int cheak_exist(char *str, char c)
+{
+    int i = 0;
+    while (str[i])
+    {
+        if (str[i] == c)
+            return 1;
+        i++;
+    }
+    return 0;
+}
+
+// void env(t_node *head)
+// {
+//     t_node *tmp;
+//     tmp = head;
+//     while (tmp != NULL && strchrch(tmp->var, '=') != slen(tmp->var))
+//     {
+//         printf("%s\n", tmp->var);
+//         tmp= tmp->next;
+//     }
+// }
+
 void env(t_node *head)
 {
     t_node *tmp;
     tmp = head;
-    while (tmp != NULL && strchrch(tmp->var, '=') != slen(tmp->var))
+    while (tmp != NULL)
     {
-        printf("%s\n", tmp->var);
+        if(cheak_exist(tmp->var, '='))
+        {
+            printf("%s\n", tmp->var);
+        }
         tmp= tmp->next;
     }
 }
@@ -114,7 +140,10 @@ t_node *unset(char **tab, t_node *head)
     int j = 1;
     while (tab[j])
     {
-        head = unset_node(head, tab[j]);
+        if(is_alphanumeric(tab[j]) || without_equal(tab[j]))
+            head = unset_node(head, tab[j]);
+        else
+            printf("my Shell: no matches found: %s\n", tab[j]);
         j++;
     }
     return head;
@@ -122,22 +151,21 @@ t_node *unset(char **tab, t_node *head)
 
 void pwd(t_node *head)
 {
-    // t_node *curr;
-    // curr = head;
-    // while (curr)
-    // {
-    //     if (curr->var[0] == 'P' && curr->var[1] == 'W' && curr->var[2] == 'D')
-    //     {
-    //         printf("%s\n", curr->var + 4);
-    //         return;
-    //     }
-    //     curr = curr->next;
-    // }
+    t_node *curr;
+    curr = head;
+    while (curr)
+    {
+        if (curr->var[0] == 'P' && curr->var[1] == 'W' && curr->var[2] == 'D')
+        {
+            printf("%s\n", curr->var + 4);
+            return;
+        }
+        curr = curr->next;
+    }
 
-    (void)head;
-
-    if (getenv("PWD") != NULL)
-        printf("%s\n", getenv("PWD"));
+    // (void)head;
+    // if (getenv("PWD") != NULL)
+    //     printf("%s\n", getenv("PWD"));
 
     // (void)head;
     // char cwd[1024];

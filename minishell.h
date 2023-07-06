@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 11:00:07 by ybourais          #+#    #+#             */
-/*   Updated: 2023/07/05 16:04:43 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/07/06 17:33:27 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void echo_n (char **tab);
 void env(t_node *head);
 void print_export(char *str);
 t_node *unset(char **tab, t_node *head);
-t_node *export(char **tab, t_node *head);
+t_node *ft_export(char **tab, t_node *head);
 void pwd(t_node *head);
 
 /*builtin_utils*/

@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:23:32 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/21 20:36:29 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/07/06 17:28:06 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@ int compare_len(char *to_delete, char *list_var)
 int compare(char *s1, char *s2)
 {
     int i = 0;
-    
+
+    if(!s1)
+        return 0;
+    if(slen(s1) != slen(s2))
+        return 0;
     while (s1[i] && s1[i])
     {
         if (s1[i] != s2[i])

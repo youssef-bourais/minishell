@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 09:12:41 by ybourais          #+#    #+#             */
-/*   Updated: 2023/06/19 13:23:02 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/07/06 15:33:16 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ char *join(char *s1, char *s2)
 int is_alphanumeric(char *str)
 {
     int i = 0;
+    if(str[0] == '=' || (str[0] >= 48 && str[0] <= 57))
+        return 0;
     while (str[i] != '\0')
     {
         if (str[i] == '=')
