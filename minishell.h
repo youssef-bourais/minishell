@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 11:00:07 by ybourais          #+#    #+#             */
-/*   Updated: 2023/07/06 17:33:27 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/07/07 14:48:20 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ typedef struct  node
 /*minishell*/
 t_node *commands(char **tab, t_node *head, int *arr);
 t_node *creat_env(t_node *head, char **env);
-char **var_expantion(int *arr, char **tab, t_node *head);
+char **var_expantion(int *arr, char **tab, t_node *head, int h);
 char *find_value_dollar(t_node *head, char *str);
 char **resize_and_find(char **tab, t_node *head, int i);
+char **from_list_to_tab(t_node *head);
+char *find_path(char **env, int j, char *str);
 
 /*builtin*/
 void echo (char **tab);
@@ -48,6 +50,7 @@ void print_export(char *str);
 t_node *unset(char **tab, t_node *head);
 t_node *ft_export(char **tab, t_node *head);
 void pwd(t_node *head);
+void cd(char **tab, t_node *head);
 
 /*builtin_utils*/
 t_node *replace_node(t_node *head, char *new, char *to_delete);
@@ -66,9 +69,9 @@ void modification(char **tab, int n, int t);
 /*parssing_tools*/
 void free_tab(char **tab);
 int slen(char *str);
-int nbr_words(char *str);
-int word_len(char *str);
-char **split(char *s);
+int nbr_words(char *str, char c);
+int word_len(char *str, char c);
+char **split(char *s, char c);
 
 /*tools*/
 void copy_str(char *dst, char *src);

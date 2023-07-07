@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:39 by ybourais          #+#    #+#             */
-/*   Updated: 2023/07/06 18:06:47 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/07/07 14:50:25 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,18 +83,12 @@ char **resize_and_find(char **tab, t_node *head, int i)
     
 // }
 
-char **var_expantion(int *arr, char **tab, t_node *head)
+char **var_expantion(int *arr, char **tab, t_node *head, int h)
 {
     int i = 0;
     int k = 0;
 
-    // while(tab[i])
-    // {
-    //     printf("%s\n", tab[i++]);
-    // }
-    // copy_tab();
-    // exit(0);
-    i = 1;
+    i = h;
     while (tab[i])
     {
         if(search(tab[i], '$') && arr[k] == 34)
@@ -114,27 +108,120 @@ char **var_expantion(int *arr, char **tab, t_node *head)
     return tab;
 }
 
+char **from_list_to_tab(t_node *head)
+{
+    char **tab;
+    t_node *tmp;
+    tmp = head;
+    
+    int i = 0;
+    while (tmp)
+    {
+        tmp = tmp->next;
+        i++;   
+    }
+    tab = malloc(sizeof(char *) * i + 1);
+    tmp = head;
+    i = 0;
+    while (tmp)
+    {
+        tab[i] = malloc(sizeof(char) * slen(tmp->var) + 1);
+        copy_str(tab[i], tmp->var);
+        i++;
+        tmp = tmp->next;
+    }
+    tab[i] = NULL;
+    return tab;
+}
+
+char *find_path(char **env, int j, char *str)
+{   
+    char *paths = NULL;
+    int i = 0;
+
+    if(!env)
+        return NULL;
+
+    while (env[i])
+    {
+        if(compare_until(env[i], str, j))
+        {
+            paths = malloc(sizeof(char) * (slen(env[i]) + 1 - slen("PATH")));
+            copy_str(paths, env[i] + 5);
+            break;
+        }
+        i++;
+    }
+    return paths;
+}
+
+void exucution(int *arr ,char **tab, t_node *head)
+{
+    char **env = from_list_to_tab(head);
+    char **paths;
+    char *path;
+    int i = 0;
+
+    path = find_path(env, 4, "path");
+    paths = split(path, ':');
+
+    i = 0;
+    int n = 0;
+    int pid = fork();
+
+    if(pid == 0)
+    {
+        if(tab[0][0] == '/' || tab[0][0] == '.')
+            execve(tab[0], tab, env);
+        else
+        {
+            i = 0;
+            tab = var_expantion(arr, tab, head, 0);
+            while (paths[i])
+            {
+                char *cmd_slash = join(paths[i], "/");
+                char *cmd = join(cmd_slash, tab[0]);
+                free(cmd_slash);
+                if(execve(cmd, tab, env) == -1)
+                    free(cmd);
+                i ++;
+                n++;
+            }
+        }       
+    }
+    free_tab(env);
+    free(path);
+    free(paths);
+    wait(NULL);
+    if(i == n)
+    {
+        printf("command not found\n");   
+    }
+}
+
 t_node *commands(char **tab, t_node *head, int *arr)
 {
     (void)arr;
     modification(tab, 25, ' ');
-    tab = var_expantion(arr, tab, head);
+    tab = var_expantion(arr, tab, head, 1);
     if (compare(tab[0], "export"))
         head = ft_export(tab, head);
     else if (compare(tab[0], "echo") && !compare(tab[1], "-n"))
         echo(tab);
     else if (compare(tab[0], "echo") && compare(tab[1], "-n"))
         echo_n(tab);
-    else if (compare(tab[0], "env"))
+    else if (compare(tab[0], "env") && !tab[1])
         env(head);
     else if (compare(tab[0], "unset") && tab[1])
         head = unset(tab, head);
-    else if (compare(tab[0], "pwd") && !tab[1])
+    else if (compare(tab[0], "pwd"))
         pwd(head);
     else if (compare(tab[0], "exit"))
         exit(0);
-    else
-        printf("%s ERROR\n", tab[0]);
+    else if (compare(tab[0], "cd"))
+        cd(tab, head);
+    else // env ls (ls exucute)
+        exucution(arr, tab, head);
     return(head);
 }
 
@@ -172,22 +259,10 @@ int main(int ac, char **av, char **env)
         }
         add_history(input);
         arr = check_quoting(input);
-        tab = split(input);
+        tab = split(input, ' ');
         head = commands(tab, head, arr);
         free_tab(tab);
         free(input);
     }
     return 0;
 }
-
-// int main()
-// {
-//     // int execve(const char *path, char *const argv[], char *const envp[]);
-
-//     char *cmd = "/bin/";
-//     char *argv[] = {"./test", NULL};
-//     char *env[] = {"red", "bleu", NULL};
-    
-//     execve(cmd, argv, NULL);
-//     printf("helll\n");
-// }

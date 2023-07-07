@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 12:52:38 by ybourais          #+#    #+#             */
-/*   Updated: 2023/07/06 17:33:20 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:32:28 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,32 +151,67 @@ t_node *unset(char **tab, t_node *head)
 
 void pwd(t_node *head)
 {
-    t_node *curr;
-    curr = head;
-    while (curr)
-    {
-        if (curr->var[0] == 'P' && curr->var[1] == 'W' && curr->var[2] == 'D')
-        {
-            printf("%s\n", curr->var + 4);
-            return;
-        }
-        curr = curr->next;
-    }
+    // t_node *curr;
+    // curr = head;
+    // while (curr)
+    // {
+    //     if (curr->var[0] == 'P' && curr->var[1] == 'W' && curr->var[2] == 'D')
+    //     {
+    //         printf("%s\n", curr->var + 4);
+    //         return;
+    //     }
+    //     curr = curr->next;
+    // }
 
     // (void)head;
     // if (getenv("PWD") != NULL)
     //     printf("%s\n", getenv("PWD"));
 
-    // (void)head;
-    // char cwd[1024];
-    // if (getcwd(cwd, sizeof(cwd)) != NULL) 
-    //     printf("%s\n", cwd);
+    (void)head;
+    char cwd[1024];
+    if (getcwd(cwd, sizeof(cwd)) != NULL) 
+        printf("%s\n", cwd);
 }
 
-void cd() 
+t_node *change_env(t_node *head, char *new, char *old)
 {
-    if (chdir("/path/to/directory") == 0) 
-        printf("Directory changed successfully.\n");
+    t_node *tmp;
+    tmp = head;
+
+    while (tmp)
+    {
+        if (compare_until(tmp->var, old, 4))
+        {
+            free(tmp->var);
+            tmp->var = malloc(sizeof(char) * slen(new) +  slen(old) + 1);
+            char *str = join(old, new);
+            copy_str(tmp->var, str);
+            free(str);
+        }
+        tmp = tmp->next;
+    }
+    return head;
+}
+
+void cd(char **tab, t_node *head) 
+{
+    char *path;
+    path = find_path(env, 4, "HOME");
+
+    char cwd[1024];
+    if(tab[0] && !tab[1])
+    {
+        head = change_env(head, getcwd(cwd, sizeof(cwd)), "OLDPWD=");
+        chdir(path);
+        head = change_env(head, getcwd(cwd, sizeof(cwd)), "PWD=");
+    }
+    else if(tab[0] && tab[1] && !tab[2])
+    {
+        head = change_env(head, getcwd(cwd, sizeof(cwd)), "OLDPWD=");
+        chdir(tab[1]);
+        head = change_env(head, getcwd(cwd, sizeof(cwd)), "PWD=");
+    }
     else 
-        perror("chdir() error");
+        perror("my_shell");
+    free(path);
 }
