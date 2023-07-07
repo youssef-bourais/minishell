@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:39 by ybourais          #+#    #+#             */
-/*   Updated: 2023/07/07 17:06:52 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/07/07 17:53:30 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,13 +155,21 @@ char *find_path(char **env, int j, char *str)
     return paths;
 }
 
+// void exit_status(char **tab)
+// {
+//     if(tab[0][0] == '$' && tab[0][1] == '?' && slen(tab[0]) == 2)
+//     {
+        
+//     }   
+// }
+
 void exucution(int *arr ,char **tab, t_node *head)
 {
     char **env = from_list_to_tab(head);
     char **paths;
     char *path;
     int i = 0;
-
+    // exit_status();
     path = find_path(env, 4, "PATH");
     paths = split(path, ':');
 
@@ -176,6 +184,11 @@ void exucution(int *arr ,char **tab, t_node *head)
         {
             i = 0;
             tab = var_expantion(arr, tab, head, 0);
+            if(tab[0] && !tab[1])
+            {
+                printf("%s\n", tab[0]);
+                return;
+            }
             while (paths[i])
             {
                 char *cmd_slash = join(paths[i], "/");
@@ -213,7 +226,7 @@ int	a_toi(char *str, int *handler)
 		res = res * 10 + str[i] - '0';
 		i++;
 	}
-    if(!(str[i] >= '0' && str[i] <= '9'))
+    if(!(str[i - 1] >= '0' && str[i - 1] <= '9'))
         *handler = 0;
 	return (res);
 }
@@ -232,8 +245,8 @@ void ft_exit(char **tab)
         if(handler == 0)
         {
             write(1, "exit\n", 5);
-            perror("my_shell:numeric argument required");
-            exit(1);
+            write(2, "my_shell: numeric argument required\n", 36);
+            exit(255);
         }
         else
         {
@@ -242,7 +255,9 @@ void ft_exit(char **tab)
         }
     }
     else if(tab[0] && tab[2])
+    {
         perror("exit: too many argument");
+    }
 }
 
 t_node *commands(char **tab, t_node *head, int *arr)
