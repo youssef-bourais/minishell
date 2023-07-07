@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 12:52:38 by ybourais          #+#    #+#             */
-/*   Updated: 2023/07/07 15:32:28 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:40:38 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ t_node *change_env(t_node *head, char *new, char *old)
 
 void cd(char **tab, t_node *head) 
 {
+    char **env = from_list_to_tab(head);
     char *path;
     path = find_path(env, 4, "HOME");
 

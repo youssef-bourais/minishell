@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:39 by ybourais          #+#    #+#             */
-/*   Updated: 2023/07/07 14:50:25 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:40:24 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,10 +194,13 @@ void exucution(int *arr ,char **tab, t_node *head)
     free(paths);
     wait(NULL);
     if(i == n)
-    {
-        printf("command not found\n");   
-    }
+        printf("command not found\n");
 }
+
+// void ft_exit(char **tab)
+// {
+    
+// }
 
 t_node *commands(char **tab, t_node *head, int *arr)
 {
@@ -216,8 +219,11 @@ t_node *commands(char **tab, t_node *head, int *arr)
         head = unset(tab, head);
     else if (compare(tab[0], "pwd"))
         pwd(head);
-    else if (compare(tab[0], "exit"))
+    else if (compare(tab[0], "exit") && !tab[2])
+    {
+        // ft_exit(tab);
         exit(0);
+    }
     else if (compare(tab[0], "cd"))
         cd(tab, head);
     else // env ls (ls exucute)
