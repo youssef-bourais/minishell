@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 10:59:39 by ybourais          #+#    #+#             */
-/*   Updated: 2023/07/07 15:40:24 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/07/07 17:06:52 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ char *find_path(char **env, int j, char *str)
     {
         if(compare_until(env[i], str, j))
         {
-            paths = malloc(sizeof(char) * (slen(env[i]) + 1 - slen("PATH")));
+            paths = malloc(sizeof(char) * (slen(env[i]) + 1 - slen(str)));
             copy_str(paths, env[i] + 5);
             break;
         }
@@ -162,11 +162,10 @@ void exucution(int *arr ,char **tab, t_node *head)
     char *path;
     int i = 0;
 
-    path = find_path(env, 4, "path");
+    path = find_path(env, 4, "PATH");
     paths = split(path, ':');
 
     i = 0;
-    int n = 0;
     int pid = fork();
 
     if(pid == 0)
@@ -185,22 +184,66 @@ void exucution(int *arr ,char **tab, t_node *head)
                 if(execve(cmd, tab, env) == -1)
                     free(cmd);
                 i ++;
-                n++;
             }
+            write(2, "command not found\n", 18);
+            exit(1);
         }       
     }
+    wait(NULL);
     free_tab(env);
     free(path);
     free(paths);
-    wait(NULL);
-    if(i == n)
-        printf("command not found\n");
 }
 
-// void ft_exit(char **tab)
-// {
-    
-// }
+int	a_toi(char *str, int *handler)
+{
+	int		i;
+	long	res;
+
+	i = 0;
+	res = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
+		i++;
+	if (str[i] == '+')
+		i++;
+	else if (!(str[i] >= '0' && str[i] <= '9'))
+		*handler = 0;
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = res * 10 + str[i] - '0';
+		i++;
+	}
+    if(!(str[i] >= '0' && str[i] <= '9'))
+        *handler = 0;
+	return (res);
+}
+
+void ft_exit(char **tab)
+{
+    if(tab[0] && !tab[1])
+    {
+        write(1, "exit\n", 5);
+        exit(0);
+    }
+    else if(tab[0] && tab[1] && !tab[2])
+    {
+        int handler = 1;
+        int num = a_toi(tab[1], &handler);
+        if(handler == 0)
+        {
+            write(1, "exit\n", 5);
+            perror("my_shell:numeric argument required");
+            exit(1);
+        }
+        else
+        {
+            write(1, "exit\n", 5);
+            exit(num);
+        }
+    }
+    else if(tab[0] && tab[2])
+        perror("exit: too many argument");
+}
 
 t_node *commands(char **tab, t_node *head, int *arr)
 {
@@ -219,14 +262,11 @@ t_node *commands(char **tab, t_node *head, int *arr)
         head = unset(tab, head);
     else if (compare(tab[0], "pwd"))
         pwd(head);
-    else if (compare(tab[0], "exit") && !tab[2])
-    {
-        // ft_exit(tab);
-        exit(0);
-    }
+    else if (compare(tab[0], "exit"))
+        ft_exit(tab);
     else if (compare(tab[0], "cd"))
         cd(tab, head);
-    else // env ls (ls exucute)
+    else// env ls (ls exucute)
         exucution(arr, tab, head);
     return(head);
 }
